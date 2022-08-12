@@ -1,10 +1,9 @@
-Step Count Tracker - documentation in progress
+# One Step Ahead Documentation
+
+## Screenshot
 
 <img src="./images/Screenshot 2022-08-12 at 19.42.05.png" alt="step tracker image"></img>
 
-# School Of Code Dashboard Documentation
-
-A note taking app for bootcampers at The School Of Code
 
 ## Author
 - Arian Moossavi
@@ -18,8 +17,6 @@ A note taking app for bootcampers at The School Of Code
 
 - The main feature is the ability to select a particular day, input the number of steps you have completed for that day and 
 
-
-- **Notes**:
 
 ## Quick Start Guide
 1. Create a folder and clone down both repositories from GitHub:
@@ -53,7 +50,7 @@ A note taking app for bootcampers at The School Of Code
 - **Date Increments** There is a current issue whereby the date font will get smaller when too many entries have been made which can impact on the user experience. Look at future updates for upcoming features that will help improve this issue.
 
 
-## Future Implementations
+## Future Implementations
 
 - **Toggle for day, week, month** - this should address the date increments issue
 
@@ -61,9 +58,8 @@ A note taking app for bootcampers at The School Of Code
 
 | Color             | Hex                                                                |
 | ----------------- | ------------------------------------------------------------------ |
-| SoC Blue | ![#32a3db](https://via.placeholder.com/10/32a3db?text=+) #32a3db |
-| SoC Grey | ![#efefef](https://via.placeholder.com/10/efefef?text=+) #efefef |
-| SoC White | ![#ffffff](https://via.placeholder.com/10/ffffff?text=+) #ffffff |
-| SoC Grey | ![#5c5c5c](https://via.placeholder.com/10/5c5c5c?text=+) #5c5c5c |
+| Light Green | #d5fff9 |
+| Light Purple | #b989f1 |
+
 
 
