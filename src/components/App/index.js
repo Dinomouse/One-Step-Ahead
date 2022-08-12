@@ -1,28 +1,70 @@
 import "./index.css";
-
-import { Chart as ChartJS } from "chart.js/auto";
+import Axios from "axios";
 import { Line } from "react-chartjs-2";
 import { useEffect, useState } from "react";
 import Input from "../Input";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 function App() {
-  const [data, setData] = useState([
-    { date: "2022-01-01", steps: 6234 },
-    { date: "2022-01-02", steps: 10001 },
-    { date: "2022-01-03", steps: 8309 },
-    { date: "2022-01-04", steps: 4000 },
-    { date: "2022-01-05", steps: 6501 },
-  ]);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    async function getSteps() {
+      const response = await fetch("http://localhost:3000/steps");
+      const data = await response.json();
+      console.log(data.payload);
+      setData(
+        data.payload.sort(function (a, b) {
+          return new Date(a.day) - new Date(b.day);
+        })
+      );
+    }
+    getSteps();
+  }, []);
+
+  useEffect(() => {
+    setUserData({
+      labels: data?.map((e) => e.day),
+      datasets: [
+        {
+          label: "Steps",
+          backgroundColor: "rgba(75,192,192,1)",
+          borderColor: "rgba(0,0,0,1)",
+          borderWidth: 2,
+          data: data?.map((e) => e.steps),
+        },
+      ],
+    });
+  }, [data]);
 
   const [userData, setUserData] = useState({
-    labels: data.map((e) => e.date),
+    labels: data?.map((e) => e.day),
     datasets: [
       {
         label: "Steps",
         backgroundColor: "rgba(75,192,192,1)",
         borderColor: "rgba(0,0,0,1)",
         borderWidth: 2,
-        data: data.map((e) => e.steps),
+        data: data?.map((e) => e.steps),
       },
     ],
   });
@@ -37,21 +79,39 @@ function App() {
       return;
     }
 
-    if (data.some((e) => e.date === dateInput)) {
-      const newIndex = data.findIndex((e) => e.date === dateInput);
-      console.log(newIndex);
-      setData([
-        ...data.slice(0, newIndex),
-        { ...data[newIndex], steps: stepsInput },
-        ...data.slice(newIndex + 1),
-      ]);
+    if (data.some((e) => e.day === dateInput)) {
+      const newIndex = data.findIndex((e) => e.day === dateInput);
+      Axios({
+        method: "put",
+        url: `http://localhost:3000/steps/${dateInput}`,
+        data: {
+          day: dateInput,
+          steps: stepsInput,
+        },
+      });
+      setData(
+        [
+          ...data.slice(0, newIndex),
+          { ...data[newIndex], steps: stepsInput },
+          ...data.slice(newIndex + 1),
+        ].sort(function (a, b) {
+          return new Date(a.day) - new Date(b.day);
+        })
+      );
       setStepsInput("");
       return;
     }
-
+    Axios({
+      method: "post",
+      url: "http://localhost:3000/steps",
+      data: {
+        day: dateInput,
+        steps: stepsInput,
+      },
+    });
     setData(
-      [...data, { date: dateInput, steps: stepsInput }].sort(function (a, b) {
-        return new Date(a.date) - new Date(b.date);
+      [...data, { day: dateInput, steps: stepsInput }].sort(function (a, b) {
+        return new Date(a.day) - new Date(b.day);
       })
     );
     setStepsInput("");
@@ -68,7 +128,7 @@ function App() {
   useEffect(() => {
     setUserData({
       ...userData,
-      labels: data.map((e) => e.date),
+      labels: data.map((e) => e.day),
       datasets: [
         {
           label: "Steps",
@@ -79,7 +139,7 @@ function App() {
         },
       ],
     });
-    console.log(userData);
+    // console.log(userData)
   }, [data]);
 
   return (

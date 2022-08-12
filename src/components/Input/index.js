@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { axios } from "axios";
 
 function Input({ addSteps, handleSteps, handleDate, stepsInput }) {
   return (
@@ -22,7 +23,7 @@ function Input({ addSteps, handleSteps, handleDate, stepsInput }) {
         value={stepsInput}
         required="required"
       ></input>
-      <button onClick={addSteps}>Add your steps!</button>
+      <button onClick={addSteps}>Add your steps</button>
     </div>
   );
 }
