@@ -15,7 +15,7 @@
 
 ## Features/Functionality
 
-- The main feature is the ability to select a particular day, input the number of steps you have completed for that day and 
+- The main feature is the ability to select a particular day, input the number of steps you have completed for that day.
 
 
 ## Quick Start Guide
